@@ -12,7 +12,6 @@ public class EmployeePayrollService {
 	private List<EmployeePayrollData> employeePayrollDataList = new ArrayList<>();
 
 	public EmployeePayrollService() {
-
 	}
 
 	public EmployeePayrollService(List<EmployeePayrollData> employeePayrollDataList) {
@@ -25,7 +24,7 @@ public class EmployeePayrollService {
 		sc.nextLine();
 		System.out.println("Enter employee name: ");
 		String name = sc.nextLine();
-		System.out.println("Eneter Employee salary: ");
+		System.out.println("Enetr Employee salary: ");
 		double salary = sc.nextDouble();
 		employeePayrollDataList.add(new EmployeePayrollData(id, name, salary));
 
@@ -33,6 +32,23 @@ public class EmployeePayrollService {
 
 	private void writeEmployeePayrollData() {
 		System.out.println("Writing employee payroll to console\n" + employeePayrollDataList);
+	}
+
+	public void writeEmployeeData(IOService ioService) {
+		if (ioService.equals(IOService.CONSOLE_IO))
+			System.out.println("Writing Employee Payroll Roster in Console\n" + employeePayrollDataList);
+		else if (ioService.equals(IOService.FILE_IO)) {
+			EmployeePayrollFileIOService.writeData(employeePayrollDataList);
+		}
+
+	}
+
+	public long countEntries(IOService ioService) {
+		if (ioService.equals(IOService.CONSOLE_IO))
+			return employeePayrollDataList.size();
+		else if (ioService.equals(IOService.FILE_IO))
+			return EmployeePayrollFileIOService.countEntries();
+		return 0;
 	}
 
 	public static void main(String[] args) {
